@@ -1,38 +1,23 @@
-import os
-import subprocess
 import streamlit as st
-import duckdb
 import pandas as pd
-
-# build warehouse if not exists
-
-# connect to dbt warehouse
-con = duckdb.connect("ecommerce_dwh/dev.duckdb")
 
 st.title("📊 Ecommerce Analytics Dashboard")
 
-# Load data
-orders = con.execute("SELECT * FROM fact_orders").fetchdf()
-customers = con.execute("SELECT * FROM dim_customer").fetchdf()
+# Load data directly from repo
+orders = pd.read_csv("ecommerce_dwh/data/raw/orders.csv")
+customers = pd.read_csv("ecommerce_dwh/data/raw/customers.csv")
 
 # KPIs
-total_orders = len(orders)
-total_customers = len(customers)
-total_revenue = orders["amount"].sum()
+st.metric("Total Orders", len(orders))
+st.metric("Total Customers", customers["customer_id"].nunique())
+st.metric("Total Revenue", orders["amount"].sum())
 
-st.metric("Total Orders", total_orders)
-st.metric("Total Customers", total_customers)
-st.metric("Total Revenue", total_revenue)
-
-st.divider()
-
-# Revenue by customer
+# Merge for analytics
 merged = orders.merge(customers, on="customer_id", how="left")
-revenue_by_customer = merged.groupby("customer_name")["amount"].sum().reset_index()
 
 st.subheader("Revenue by Customer")
-st.bar_chart(revenue_by_customer.set_index("customer_name"))
+revenue = merged.groupby("customer_name")["amount"].sum().reset_index()
 
-# Orders table
-st.subheader("Orders Data")
+st.bar_chart(revenue.set_index("customer_name"))
+
 st.dataframe(orders)
