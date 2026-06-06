@@ -1,5 +1,8 @@
 # Ecommerce Data Warehouse Project
 
+## Live dashboard https://ecommerce-dwh-dbt-eisfmmhi2aegpbgsljbbds.streamlit.app/
+ 
+
 ## Overview
 
 This project demonstrates a modern analytics engineering workflow using dbt and DuckDB following Medallion Architecture principles.
