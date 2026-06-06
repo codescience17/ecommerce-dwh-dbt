@@ -1,9 +1,15 @@
+import os
+import subprocess
 import streamlit as st
 import duckdb
 import pandas as pd
 
+# build warehouse if not exists
+if not os.path.exists("dev.duckdb"):
+    subprocess.run(["dbt", "run"], cwd="ecommerce_dwh")
+
 # connect to dbt warehouse
-con = duckdb.connect('dev.duckdb')
+con = duckdb.connect("ecommerce_dwh/dev.duckdb")
 
 st.title("📊 Ecommerce Analytics Dashboard")
 
