@@ -1,0 +1,5 @@
+customer_id,customer_name,email,city,country
+1,John Doe,john@gmail.com,New York,USA
+2,Alice Smith,alice@gmail.com,London,UK
+3,Rahul Sharma,rahul@gmail.com,Mumbai,India
+4,Sara Khan,sara@gmail.com,Dubai,UAE
