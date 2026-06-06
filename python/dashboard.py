@@ -3,9 +3,14 @@ import pandas as pd
 
 st.title("📊 Ecommerce Analytics Dashboard")
 
-# Load data directly from repo
-orders = pd.read_csv("ecommerce_dwh/data/raw/orders.csv")
-customers = pd.read_csv("ecommerce_dwh/data/raw/customers.csv")
+# get correct base path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+orders_path = BASE_DIR / "ecommerce_dwh" / "data" / "raw" / "orders.csv"
+customers_path = BASE_DIR / "ecommerce_dwh" / "data" / "raw" / "customers.csv"
+
+orders = pd.read_csv(orders_path)
+customers = pd.read_csv(customers_path)
 
 # KPIs
 st.metric("Total Orders", len(orders))
