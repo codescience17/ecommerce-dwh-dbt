@@ -4,14 +4,16 @@ from pathlib import Path
 
 st.title("📊 Ecommerce Analytics Dashboard")
 
-# get correct base path
-BASE_DIR = Path(__file__).resolve().parent.parent
+# project root = ecommerce_dwh
+BASE_DIR = Path(__file__).resolve().parent
 
-orders_path = BASE_DIR / "ecommerce_dwh" / "data" / "raw" / "orders.csv"
-customers_path = BASE_DIR / "ecommerce_dwh" / "data" / "raw" / "customers.csv"
+# go up one level from python/ → ecommerce_dwh/
+PROJECT_ROOT = BASE_DIR.parent
 
-orders = pd.read_csv(orders_path)
-customers = pd.read_csv(customers_path)
+data_dir = PROJECT_ROOT / "data" / "raw"
+
+orders = pd.read_csv(data_dir / "orders.csv")
+customers = pd.read_csv(data_dir / "customers.csv")
 
 # KPIs
 st.metric("Total Orders", len(orders))
